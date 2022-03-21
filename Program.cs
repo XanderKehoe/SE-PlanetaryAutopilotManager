@@ -294,8 +294,8 @@ namespace IngameScript
         {
             public static float maxSpeed = 100f;
 
-            private static float targetElevation = 150f; // the elevation the ship will try to maintain
-            private static float targetElevationTolerance = 25f; // if ship's elevation is between targetElevation+-targetElevation, it will not adjust its elevation.
+            private static float targetElevation = 500f; // the elevation the ship will try to maintain
+            private static float targetElevationTolerance = 25f; // if ship's elevation is between targetElevation+-targetElevationTolerance, it will not adjust its elevation.
 
             public static float scanningDistanceForwardModifier = 1.5f; // Modifier to increase scanning range, should be greater than cruisingDistanceModifier 
             public static float scanningDistanceDownwardModifier = 2f; // Modifier to increase scanning range
@@ -347,8 +347,8 @@ namespace IngameScript
                 Decelerating,
             }
 
+            // You can subscribe to this event to be notified when the ship has reached it's destination
             public delegate void FlightCompleteHandler();
-
             public static event FlightCompleteHandler FlightCompleted;
 
             public static void Init(IMyGridTerminalSystem gts, MyGridProgram gp, ref MyIni ini)
@@ -991,6 +991,7 @@ namespace IngameScript
 
                 if (currentElevation > targetElevation && verticalVelocity < 0) //falling
                 {
+                    // F = (mv^2 / 2d) + (mg)
                     double totalNeededForce = ((shipMass * Math.Pow(verticalVelocity, 2))
                         / (distanceToTargetElevation * 2)) + (shipMass * GRAVITY);
 
