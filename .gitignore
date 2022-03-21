@@ -1,0 +1,7 @@
+*.sln
+*.csproj
+*.png
+bin/
+MDK/
+obj/
+.vs/
